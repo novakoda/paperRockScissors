@@ -55,11 +55,11 @@ function round() {
   const computerSelection = computerPlay()
   let result = playRound(playerSelection, computerSelection)
   if (result > 0) {
-    console.log('You win the round!');
+    alert('You win the round!');
   } else if (result < 0) {
-    console.log('You lose the round!');
+    alert('You lose the round!');
   } else {
-    console.log('The round was a tie!');
+    alert('The round was a tie!');
   }
   return result;
 }
@@ -75,14 +75,15 @@ function game() {
   let result = game1 + game2 + game3 + game4 + game5;
 
   if (result > 0) {
-    msg('You win the game!');
+    msg('You won the game! xD');
   } else if (result < 0) {
-    msg('You lose the game!');
+    msg('You lost the game :(');
   } else {
-    msg('The game was a tie!');
+    msg('The game was a tie -_-');
   }
 }
 
+alert('Paper, Rock, Scissors best of 5 games!')
 game()
 
 //console.log(playRound(playerSelection, computerSelection))
