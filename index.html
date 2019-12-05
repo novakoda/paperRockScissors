@@ -3,21 +3,31 @@
 <body>
 
 <h2>Paper Rock Scissors with JavaScript</h2>
-<p id="gameMsg"></p>
-
-<h4>Refresh to play again!</h4>
+<h4>First one to 3 wins!</h4>
+<button id="newGame">New Game</button>
+<br>
+<br>
+<button id="paper">Paper</button>
+<button id="rock">Rock</button>
+<button id="scissors">Scissor</button>
+<br>
+<h4 id="yourScoreMsg"></h4>
+<h4 id="compScoreMsg"></h4>
+<h3 id="gameMsg">Click new game to begin</h3>
+<p id="compMsg"></p>
 
 <script>
 function computerPlay() {
     const choicesList = ['paper', 'rock', 'scissors'];
    	let computerChoice = choicesList[Math.floor(Math.random() * choicesList.length)];
+
+    compMsg('Computer chose ' + computerChoice);
     return computerChoice;
 }
 
 function playRound(playerSelection,computerSelection) {
-  let playerChoice = playerSelection.toLowerCase();
-
-	switch (playerChoice) {
+//  let playerChoice = playerSelection.toLowerCase();
+	switch (playerSelection) {
 
     case 'rock' :
       switch (computerSelection) {
@@ -47,45 +57,95 @@ function playRound(playerSelection,computerSelection) {
  	}
 }
 
-function msg(message) {
-  document.getElementById("gameMsg").innerHTML = message;
-}
-
-function round() {
-  const playerSelection = prompt('Rock, paper, or scissors?')
+function round(playerSelection) {
   const computerSelection = computerPlay()
   let result = playRound(playerSelection, computerSelection)
   if (result > 0) {
-    alert('You win the round!');
+    playerScore++;
+    if (playerScore >= winNum) {
+      gameOver();
+      msg("gameMsg", 'YOU WIN THE GAME! xD');
+      msg("yourScoreMsg", 'Your Score: ' + playerScore);
+    } else {
+      msg("gameMsg", 'You win the round!');
+      msg("yourScoreMsg", 'Your Score: ' + playerScore);
+    }
   } else if (result < 0) {
-    alert('You lose the round!');
+    compScore++;
+    if (compScore >= winNum) {
+      gameOver();
+      msg("gameMsg", 'YOU LOSE THE GAME! :/');
+      msg("compScoreMsg", 'Computer Score: ' + compScore);
+    } else {
+      msg("gameMsg", 'You lose the round!');
+      msg("compScoreMsg", 'Computer Score: ' + compScore);
+    }
   } else {
-    alert('The round was a tie!');
+    msg("gameMsg", 'The round was a tie!');
   }
   return result;
 }
 
 
-function game() {
-  let game1 = round()
-  let  game2 = round()
-  let game3 = round()
-  let game4 = round()
-  let game5 = round()
+function game(winNum) {
+  playerScore = 0;
+  compScore = 0;
+  msg("yourScoreMsg", 'Your Score: 0');
+  msg("compScoreMsg", 'Computer Score: 0');
 
-  let result = game1 + game2 + game3 + game4 + game5;
+  paperBtn.addEventListener("click", paperBtn.fnc = function() {round('paper')});
+  rockBtn.addEventListener("click", rockBtn.fnc = function() {round('rock')});
+  scissorBtn.addEventListener("click", scissorBtn.fnc = function() {round('scissors')});
 
-  if (result > 0) {
+  if (playerScore >= winNum) {
     msg('You won the game! xD');
-  } else if (result < 0) {
+  } else if (compScore >= winNum) {
     msg('You lost the game :(');
   } else {
     msg('The game was a tie -_-');
   }
 }
 
-alert('Paper, Rock, Scissors best of 5 games!')
-game()
+function gameOver() {
+  paperBtn.removeEventListener("click", paperBtn.fnc);
+  rockBtn.removeEventListener("click", rockBtn.fnc);
+  scissorBtn.removeEventListener("click", scissorBtn.fnc);
+
+}
+
+function msg(id, message) {
+  document.getElementById(id).innerHTML = message;
+}
+
+function compMsg(message) {
+  document.getElementById("compMsg").innerHTML = message;
+}
+
+function yourScore(message) {
+  document.getElementById("yourScoreMsg").innerHTML = message;
+}
+
+function compScore(message) {
+  document.getElementById("compScoreMsg").innerHTML = message;
+}
+
+
+var playerScore = 0;
+var compScore = 0;
+const winNum = 3;
+
+let paperBtn = document.querySelector('#paper');
+let rockBtn = document.querySelector('#rock');
+let scissorBtn = document.querySelector('#scissors');
+let newBtn = document.querySelector('#newGame');
+
+
+paperBtn.addEventListener("click", function() {msg('gameMsg', 'Start a new game!')});
+rockBtn.addEventListener("click", function() {msg('gameMsg', 'Start a new game!')});
+scissorBtn.addEventListener("click", function() {msg('gameMsg', 'Start a new game!')});
+newBtn.addEventListener("click", function() {game()});
+
+
 </script>
 
 </body>
