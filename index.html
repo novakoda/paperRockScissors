@@ -96,21 +96,12 @@ function game(winNum) {
   paperBtn.addEventListener("click", paperBtn.fnc = function() {round('paper')});
   rockBtn.addEventListener("click", rockBtn.fnc = function() {round('rock')});
   scissorBtn.addEventListener("click", scissorBtn.fnc = function() {round('scissors')});
-
-  if (playerScore >= winNum) {
-    msg('You won the game! xD');
-  } else if (compScore >= winNum) {
-    msg('You lost the game :(');
-  } else {
-    msg('The game was a tie -_-');
-  }
 }
 
 function gameOver() {
   paperBtn.removeEventListener("click", paperBtn.fnc);
   rockBtn.removeEventListener("click", rockBtn.fnc);
   scissorBtn.removeEventListener("click", scissorBtn.fnc);
-
 }
 
 function msg(id, message) {
